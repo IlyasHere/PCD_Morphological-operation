@@ -57,7 +57,6 @@ def erosion(image, se):
                 j:j + se_w
             ]
 
-            # Hanya posisi kernel bernilai 1 yang diperiksa
             if np.all(region[se == 1] == 1):
                 output[i, j] = 1
 
@@ -114,11 +113,6 @@ def hit_or_miss_single_se(image, se):
 
     return output
 
-
-# =====================================================
-# 2. VISUALISASI MATRIKS DENGAN BORDER
-# =====================================================
-
 def setup_image_grid(ax, img, title):
     """Menampilkan citra dengan border setiap piksel."""
 
@@ -139,7 +133,6 @@ def setup_image_grid(ax, img, title):
 
     h, w = img.shape
 
-    # Garis pembatas setiap piksel
     ax.set_xticks(
         np.arange(-0.5, w, 1),
         minor=True
@@ -193,7 +186,6 @@ def setup_kernel_grid(ax, k, title):
 
     h, w = k.shape
 
-    # Angka pada setiap kotak kernel
     for i in range(h):
         for j in range(w):
 
@@ -210,7 +202,6 @@ def setup_kernel_grid(ax, k, title):
                 fontweight='bold'
             )
 
-    # Garis border setiap kotak
     ax.set_xticks(
         np.arange(-0.5, w, 1),
         minor=True
@@ -245,11 +236,6 @@ def setup_kernel_grid(ax, k, title):
         spine.set_color('black')
         spine.set_linewidth(1.2)
 
-
-# =====================================================
-# 3. MATRIKS CITRA UJI 10x10
-# =====================================================
-
 sample_image = np.array([
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -263,35 +249,17 @@ sample_image = np.array([
     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
 ], dtype=int)
 
-
-# =====================================================
-# 4. STRUCTURING ELEMENT
-# =====================================================
-
-# Kernel berbentuk PLUS (+)
-# Digunakan untuk Dilation, Erosion,
-# Opening, dan Closing
-
 se_3x3 = np.array([
     [0, 1, 0],
     [1, 1, 1],
     [0, 1, 0]
 ], dtype=int)
 
-
-# Kernel khusus Hit-or-Miss
-# Digunakan untuk mendeteksi pola tertentu
-
 se_hom_single = np.array([
     [0, 1, 1],
     [0, 1, 1],
     [0, 0, 0]
 ], dtype=int)
-
-
-# =====================================================
-# 5. MENU DILATION DAN EROSION
-# =====================================================
 
 def menu_dilasi_erosi():
 
@@ -414,11 +382,6 @@ def menu_opening_closing():
     plt.close(fig)
 
     print("Hasil disimpan:", filename)
-
-
-# =====================================================
-# 7. MENU HIT-OR-MISS TRANSFORM
-# =====================================================
 
 def menu_hit_or_miss():
 
